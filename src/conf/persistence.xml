@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="3.0" xmlns="https://jakarta.ee/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
+  <!--
+        This persistence unit is used for the Assignment 2 electronics store system.
+        It connects the JPA entity classes with the database.
+    -->
+  <persistence-unit name="ElectronicsStorePU" transaction-type="JTA">
+    <!--
+            This data source will be created in GlassFish later.
+            It will connect the application to the MySQL database.
+        -->
+    <jta-data-source>jdbc/ElectronicsStoreDS</jta-data-source>
+    <!-- Entity classes for the persistence layer -->
+    <class>entities.Product</class>
+    <class>entities.Tablet</class>
+    <class>entities.Smartwatch</class>
+    <class>entities.Customer</class>
+    <class>entities.CustomerOrder</class>
+    <class>entities.UserAccount</class>
+    <properties>
+      <!--
+                This allows EclipseLink to create the database tables
+                from the JPA entity classes during development.
+            -->
+      <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
+      <!--
+                These properties help show SQL commands in the output window.
+                It is useful for testing and debugging.
+            -->
+      <property name="eclipselink.logging.level" value="INFO"/>
+      <property name="eclipselink.logging.level.sql" value="FINE"/>
+      <property name="eclipselink.logging.parameters" value="true"/>
+    </properties>
+  </persistence-unit>
+</persistence>

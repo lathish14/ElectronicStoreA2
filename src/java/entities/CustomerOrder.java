@@ -1,0 +1,248 @@
+package entities;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * This CustomerOrder class is an entity class for storing customer orders.
+ *
+ * I created this class because the assignment requires customer orders to be
+ * persisted in the database. Each order belongs to one customer, and each order
+ * is for one product item only.
+ *
+ * This entity also stores quantity and order date so the business layer can
+ * manage stock when an order is created or deleted.
+ */
+@Entity
+@Table(name = "CUSTOMER_ORDER")
+@NamedQueries({
+    // This query is used to get all orders from the database.
+    @NamedQuery(name = "CustomerOrder.findAll", query = "SELECT o FROM CustomerOrder o"),
+
+    // This query is used to find an order by order id.
+    @NamedQuery(name = "CustomerOrder.findById", query = "SELECT o FROM CustomerOrder o WHERE o.orderId = :orderId"),
+
+    // This query is used to find all orders for one customer.
+    @NamedQuery(name = "CustomerOrder.findByCustomer", query = "SELECT o FROM CustomerOrder o WHERE o.customer.customerId = :customerId"),
+
+    // This query is used to find all orders for one product.
+    @NamedQuery(name = "CustomerOrder.findByProduct", query = "SELECT o FROM CustomerOrder o WHERE o.product.productId = :productId")
+})
+public class CustomerOrder implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    // This is the primary key for the CUSTOMER_ORDER table.
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ORDER_ID")
+    private Long orderId;
+
+    /*
+     * Many orders can belong to one customer.
+     * This matches the assignment requirement that a customer can have multiple orders.
+     */
+    @NotNull(message = "Customer is required")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CUSTOMER_ID", nullable = false)
+    private Customer customer;
+
+    /*
+     * Each order is for one product item only.
+     * The product can be a Tablet or Smartwatch because both extend Product.
+     */
+    @NotNull(message = "Product is required")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PRODUCT_ID", nullable = false)
+    private Product product;
+
+    // Quantity ordered by the customer.
+    @NotNull(message = "Quantity is required")
+    @Min(value = 1, message = "Quantity must be at least 1")
+    @Column(name = "QUANTITY", nullable = false)
+    private Integer quantity;
+
+    // Price at the time of ordering. This is useful if product price changes later.
+    @NotNull(message = "Order price is required")
+    @PositiveOrZero(message = "Order price must be zero or greater")
+    @Column(name = "ORDER_PRICE", nullable = false)
+    private Double orderPrice;
+
+    // Total amount = quantity * order price.
+    @NotNull(message = "Total amount is required")
+    @PositiveOrZero(message = "Total amount must be zero or greater")
+    @Column(name = "TOTAL_AMOUNT", nullable = false)
+    private Double totalAmount;
+
+    // Date when the order was created.
+    @NotNull(message = "Order date is required")
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "ORDER_DATE", nullable = false)
+    private Date orderDate;
+
+    /**
+     * Empty constructor is required by JPA.
+     */
+    public CustomerOrder() {
+        this.orderDate = new Date();
+    }
+
+    /**
+     * This constructor is used to create an order with customer, product, and
+     * quantity details.
+     *
+     * @param customer customer who places the order
+     * @param product product ordered by the customer
+     * @param quantity quantity ordered
+     */
+    public CustomerOrder(Customer customer, Product product, Integer quantity) {
+        this.customer = customer;
+        this.product = product;
+        this.quantity = quantity;
+
+        if (product != null) {
+            this.orderPrice = product.getPrice();
+        }
+
+        calculateTotalAmount();
+        this.orderDate = new Date();
+    }
+
+    /**
+     * This method recalculates the total amount when price or quantity changes.
+     */
+    public void calculateTotalAmount() {
+        if (orderPrice != null && quantity != null) {
+            this.totalAmount = orderPrice * quantity;
+        }
+    }
+
+    /**
+     * Checks whether the order has the required customer, product, and
+     * quantity.
+     *
+     * @return true if the order has the main required details
+     */
+    public boolean hasRequiredDetails() {
+        return customer != null
+                && product != null
+                && quantity != null
+                && quantity > 0;
+    }
+
+    /**
+     * @return the order id
+     */
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    /**
+     * @param orderId the order id to set
+     */
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    /**
+     * @return the customer who placed the order
+     */
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    /**
+     * @param customer the customer to set
+     */
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    /**
+     * @return the product ordered
+     */
+    public Product getProduct() {
+        return product;
+    }
+
+    /**
+     * @param product the product to set
+     */
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    /**
+     * @return the quantity ordered
+     */
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    /**
+     * @param quantity the quantity to set
+     */
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+        calculateTotalAmount();
+    }
+
+    /**
+     * @return the order price
+     */
+    public Double getOrderPrice() {
+        return orderPrice;
+    }
+
+    /**
+     * @param orderPrice the order price to set
+     */
+    public void setOrderPrice(Double orderPrice) {
+        this.orderPrice = orderPrice;
+        calculateTotalAmount();
+    }
+
+    /**
+     * @return the total order amount
+     */
+    public Double getTotalAmount() {
+        return totalAmount;
+    }
+
+    /**
+     * @param totalAmount the total amount to set
+     */
+    public void setTotalAmount(Double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    /**
+     * @return the order date
+     */
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    /**
+     * @param orderDate the order date to set
+     */
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
+    }
+}
