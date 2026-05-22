@@ -26,6 +26,10 @@ import java.io.Serializable;
 @Entity
 @Table(name = "PRODUCT")
 @Inheritance(strategy = InheritanceType.JOINED)
+/*
+ * These named queries are used by the EJB layer to retrieve and search
+ * product records without writing the same JPQL again in multiple places.
+ */
 @NamedQueries({
     // This query is used to get all products from the database.
     @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
