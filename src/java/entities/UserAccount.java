@@ -152,6 +152,15 @@ public class UserAccount implements Serializable {
     }
 
     /**
+     * Checks whether the user account has been verified.
+     *
+     * @return true if the account is verified
+     */
+    public boolean isAccountVerified() {
+        return Boolean.TRUE.equals(verified);
+    }
+
+    /**
      * @return the user id
      */
     public Long getUserId() {
