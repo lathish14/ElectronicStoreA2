@@ -344,4 +344,13 @@ public abstract class Product implements Serializable {
     public boolean hasWifiSupport() {
         return Boolean.TRUE.equals(wifiCapability);
     }
+
+    /**
+     * Checks whether this product has a valid selling price.
+     *
+     * @return true if price is zero or greater
+     */
+    public boolean hasValidPrice() {
+        return price != null && price >= 0;
+    }
 }
