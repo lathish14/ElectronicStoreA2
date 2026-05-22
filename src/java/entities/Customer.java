@@ -122,10 +122,12 @@ public class Customer implements Serializable {
     /**
      * Returns the combined full name for display in JSF pages.
      *
-     * @return first name followed by a space and last name
+     * @return first name followed by last name
      */
     public String getFullName() {
-        return firstName + " " + lastName;
+        String first = firstName != null ? firstName : "";
+        String last = lastName != null ? lastName : "";
+        return (first + " " + last).trim();
     }
 
     /**
