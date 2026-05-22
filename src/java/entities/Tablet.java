@@ -6,6 +6,7 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -41,6 +42,7 @@ public class Tablet extends Product implements Serializable {
     private static final long serialVersionUID = 1L;
 
     // Storage capacity is specific to tablets, for example 64GB or 128GB.
+    @Size(max = 50, message = "Storage capacity must be less than 50 characters")
     @Column(name = "STORAGE_CAPACITY", length = 50)
     private String storageCapacity;
 
@@ -49,6 +51,7 @@ public class Tablet extends Product implements Serializable {
     private Boolean stylusSupport;
 
     // Battery capacity is specific to tablets, for example 8000mAh.
+    @Size(max = 50, message = "Battery capacity must be less than 50 characters")
     @Column(name = "BATTERY_CAPACITY", length = 50)
     private String batteryCapacity;
 
