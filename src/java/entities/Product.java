@@ -353,4 +353,18 @@ public abstract class Product implements Serializable {
     public boolean hasValidPrice() {
         return price != null && price >= 0;
     }
+
+    /**
+     * Reduces the stock quantity when an order is placed.
+     *
+     * @param quantity quantity to reduce
+     * @return true if stock was reduced successfully
+     */
+    public boolean reduceStock(int quantity) {
+        if (hasEnoughStock(quantity)) {
+            stockQuantity = stockQuantity - quantity;
+            return true;
+        }
+        return false;
+    }
 }
