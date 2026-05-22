@@ -141,6 +141,17 @@ public class UserAccount implements Serializable {
     }
 
     /**
+     * Returns the user's full name for display.
+     *
+     * @return first name followed by last name
+     */
+    public String getFullName() {
+        String first = firstName != null ? firstName : "";
+        String last = lastName != null ? lastName : "";
+        return (first + " " + last).trim();
+    }
+
+    /**
      * @return the user id
      */
     public Long getUserId() {
