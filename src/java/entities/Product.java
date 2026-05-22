@@ -324,4 +324,15 @@ public abstract class Product implements Serializable {
                 && requestedQuantity > 0
                 && stockQuantity >= requestedQuantity;
     }
+
+    /**
+     * Returns a readable product name using brand and model.
+     *
+     * @return product brand and model together
+     */
+    public String getDisplayName() {
+        String productBrand = brand != null ? brand : "";
+        String productModel = model != null ? model : "";
+        return (productBrand + " " + productModel).trim();
+    }
 }
