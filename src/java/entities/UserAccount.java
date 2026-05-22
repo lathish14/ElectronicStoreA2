@@ -161,6 +161,15 @@ public class UserAccount implements Serializable {
     }
 
     /**
+     * Checks whether the account currently has a recovery code.
+     *
+     * @return true if a recovery code is available
+     */
+    public boolean hasRecoveryCode() {
+        return recoveryCode != null && !recoveryCode.trim().isEmpty();
+    }
+
+    /**
      * @return the user id
      */
     public Long getUserId() {
