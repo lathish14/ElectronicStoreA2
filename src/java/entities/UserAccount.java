@@ -10,6 +10,9 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -48,18 +51,27 @@ public class UserAccount implements Serializable {
     private Long userId;
 
     // First name of the registered user.
+    @NotBlank(message = "First name is required")
+    @Size(max = 100, message = "First name must be less than 100 characters")
     @Column(name = "FIRST_NAME", nullable = false, length = 100)
     private String firstName;
 
     // Last name of the registered user.
+    @NotBlank(message = "Last name is required")
+    @Size(max = 100, message = "Last name must be less than 100 characters")
     @Column(name = "LAST_NAME", nullable = false, length = 100)
     private String lastName;
 
     // Username must be unique because it is used for login.
+    @NotBlank(message = "Username is required")
+    @Size(max = 100, message = "Username must be less than 100 characters")
     @Column(name = "USERNAME", nullable = false, unique = true, length = 100)
     private String username;
 
     // Email must be unique because it is used for verification and recovery.
+    @NotBlank(message = "Email is required")
+    @Email(message = "Please enter a valid email address")
+    @Size(max = 150, message = "Email must be less than 150 characters")
     @Column(name = "EMAIL", nullable = false, unique = true, length = 150)
     private String email;
 
@@ -67,6 +79,8 @@ public class UserAccount implements Serializable {
      * The password should not be stored as plain text.
      * The business layer should hash the password before saving it here.
      */
+    @NotBlank(message = "Password hash is required")
+    @Size(max = 512, message = "Password hash must be less than 512 characters")
     @Column(name = "PASSWORD_HASH", nullable = false, length = 512)
     private String passwordHash;
 
@@ -74,6 +88,7 @@ public class UserAccount implements Serializable {
      * This stores the email verification code during registration.
      * After successful verification, the business layer can clear or update it.
      */
+    @Size(max = 20, message = "Verification code must be less than 20 characters")
     @Column(name = "VERIFICATION_CODE", length = 20)
     private String verificationCode;
 
@@ -85,6 +100,7 @@ public class UserAccount implements Serializable {
      * This stores the recovery code when the user forgets username or password.
      * The user must enter this code to reset the password.
      */
+    @Size(max = 20, message = "Recovery code must be less than 20 characters")
     @Column(name = "RECOVERY_CODE", length = 20)
     private String recoveryCode;
 
