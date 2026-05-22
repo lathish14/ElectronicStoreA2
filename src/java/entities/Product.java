@@ -10,6 +10,9 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 
 /**
@@ -60,10 +63,12 @@ public abstract class Product implements Serializable {
     private Long productId;
 
     // Brand is required because every product must have a brand.
+    @NotBlank(message = "Brand is required")
     @Column(name = "BRAND", nullable = false, length = 100)
     private String brand;
 
     // Model is required because every product must have a model.
+    @NotBlank(message = "Model is required")
     @Column(name = "MODEL", nullable = false, length = 100)
     private String model;
 
@@ -88,6 +93,8 @@ public abstract class Product implements Serializable {
     private Boolean wifiCapability;
 
     // Price is required because products must be sold with a price.
+    @NotNull(message = "Price is required")
+    @PositiveOrZero(message = "Price must be zero or greater")
     @Column(name = "PRICE", nullable = false)
     private Double price;
 
@@ -98,6 +105,8 @@ public abstract class Product implements Serializable {
      * When an order is created, this quantity can be reduced.
      * When an order is deleted, this quantity can be increased again.
      */
+    @NotNull(message = "Stock quantity is required")
+    @PositiveOrZero(message = "Stock quantity must be zero or greater")
     @Column(name = "STOCK_QUANTITY", nullable = false)
     private Integer stockQuantity;
 
