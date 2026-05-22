@@ -134,6 +134,19 @@ public class CustomerOrder implements Serializable {
     }
 
     /**
+     * Checks whether the order has the required customer, product, and
+     * quantity.
+     *
+     * @return true if the order has the main required details
+     */
+    public boolean hasRequiredDetails() {
+        return customer != null
+                && product != null
+                && quantity != null
+                && quantity > 0;
+    }
+
+    /**
      * @return the order id
      */
     public Long getOrderId() {
