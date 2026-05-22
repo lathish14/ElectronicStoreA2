@@ -133,4 +133,23 @@ public class Smartwatch extends Product implements Serializable {
     public void setWearableConnectivity(String wearableConnectivity) {
         this.wearableConnectivity = wearableConnectivity;
     }
+
+    /**
+     * Returns a readable summary of smartwatch-specific features.
+     *
+     * @return smartwatch health, fitness, and connectivity details
+     */
+    public String getSmartwatchFeatures() {
+        String health = healthMonitoring != null && healthMonitoring
+                ? "Health monitoring"
+                : "No health monitoring";
+
+        String fitness = fitnessTracking != null && fitnessTracking
+                ? "Fitness tracking"
+                : "No fitness tracking";
+
+        String wearable = wearableConnectivity != null ? wearableConnectivity : "N/A";
+
+        return health + ", " + fitness + ", " + wearable;
+    }
 }
