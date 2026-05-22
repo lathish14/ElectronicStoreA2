@@ -155,6 +155,15 @@ public class Customer implements Serializable {
         }
     }
 
+    /**
+     * Returns the number of orders linked to this customer.
+     *
+     * @return customer order count
+     */
+    public int getOrderCount() {
+        return orders != null ? orders.size() : 0;
+    }
+
     public Long getCustomerId() {
         return customerId;
     }
