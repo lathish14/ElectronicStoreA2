@@ -13,6 +13,9 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -55,6 +58,7 @@ public class CustomerOrder implements Serializable {
      * Many orders can belong to one customer.
      * This matches the assignment requirement that a customer can have multiple orders.
      */
+    @NotNull(message = "Customer is required")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CUSTOMER_ID", nullable = false)
     private Customer customer;
@@ -63,23 +67,31 @@ public class CustomerOrder implements Serializable {
      * Each order is for one product item only.
      * The product can be a Tablet or Smartwatch because both extend Product.
      */
+    @NotNull(message = "Product is required")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PRODUCT_ID", nullable = false)
     private Product product;
 
     // Quantity ordered by the customer.
+    @NotNull(message = "Quantity is required")
+    @Min(value = 1, message = "Quantity must be at least 1")
     @Column(name = "QUANTITY", nullable = false)
     private Integer quantity;
 
     // Price at the time of ordering. This is useful if product price changes later.
+    @NotNull(message = "Order price is required")
+    @PositiveOrZero(message = "Order price must be zero or greater")
     @Column(name = "ORDER_PRICE", nullable = false)
     private Double orderPrice;
 
     // Total amount = quantity * order price.
+    @NotNull(message = "Total amount is required")
+    @PositiveOrZero(message = "Total amount must be zero or greater")
     @Column(name = "TOTAL_AMOUNT", nullable = false)
     private Double totalAmount;
 
     // Date when the order was created.
+    @NotNull(message = "Order date is required")
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ORDER_DATE", nullable = false)
     private Date orderDate;
