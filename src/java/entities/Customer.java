@@ -137,8 +137,10 @@ public class Customer implements Serializable {
      * @param order the order to add to this customer
      */
     public void addOrder(CustomerOrder order) {
-        orders.add(order);
-        order.setCustomer(this);
+        if (order != null) {
+            orders.add(order);
+            order.setCustomer(this);
+        }
     }
 
     /**
@@ -147,8 +149,10 @@ public class Customer implements Serializable {
      * @param order the order to remove from this customer
      */
     public void removeOrder(CustomerOrder order) {
-        orders.remove(order);
-        order.setCustomer(null);
+        if (order != null) {
+            orders.remove(order);
+            order.setCustomer(null);
+        }
     }
 
     public Long getCustomerId() {
