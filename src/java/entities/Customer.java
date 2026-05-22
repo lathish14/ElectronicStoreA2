@@ -10,6 +10,9 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +20,12 @@ import java.util.List;
 /**
  * This Customer entity class persists customer details in the CUSTOMER table.
  *
- * The assignment requires customer details and customer orders to be stored
- * in the database. One customer can have many orders (one-to-many), and each
- * order belongs to only one customer.
+ * The assignment requires customer details and customer orders to be stored in
+ * the database. One customer can have many orders (one-to-many), and each order
+ * belongs to only one customer.
  *
- * FIX applied: replaced Customer.findByLastName with Customer.findByName
- * using CONCAT to support full-name search as shown in the demo document.
+ * FIX applied: replaced Customer.findByLastName with Customer.findByName using
+ * CONCAT to support full-name search as shown in the demo document.
  */
 @Entity
 @Table(name = "CUSTOMER")
@@ -55,30 +58,39 @@ public class Customer implements Serializable {
     private Long customerId;
 
     // First name of the customer - required.
+    @NotBlank(message = "First name is required")
+    @Size(max = 100, message = "First name must be less than 100 characters")
     @Column(name = "FIRST_NAME", nullable = false, length = 100)
     private String firstName;
 
     // Last name of the customer - required.
+    @NotBlank(message = "Last name is required")
+    @Size(max = 100, message = "Last name must be less than 100 characters")
     @Column(name = "LAST_NAME", nullable = false, length = 100)
     private String lastName;
 
     // Email address - required and must be unique per customer.
+    @NotBlank(message = "Email is required")
+    @Email(message = "Please enter a valid email address")
+    @Size(max = 150, message = "Email must be less than 150 characters")
     @Column(name = "EMAIL", nullable = false, unique = true, length = 150)
     private String email;
 
     // Phone number of the customer.
+    @Size(max = 30, message = "Phone number must be less than 30 characters")
     @Column(name = "PHONE", length = 30)
     private String phone;
 
     // Street or delivery address of the customer.
+    @Size(max = 300, message = "Address must be less than 300 characters")
     @Column(name = "ADDRESS", length = 300)
     private String address;
 
     /**
-     * One-to-many: one customer can have many orders.
-     * mappedBy refers to the 'customer' field in CustomerOrder.
-     * CascadeType.ALL propagates persist/merge/remove to child orders.
-     * orphanRemoval = true removes orders deleted from this list.
+     * One-to-many: one customer can have many orders. mappedBy refers to the
+     * 'customer' field in CustomerOrder. CascadeType.ALL propagates
+     * persist/merge/remove to child orders. orphanRemoval = true removes orders
+     * deleted from this list.
      */
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CustomerOrder> orders = new ArrayList<>();
@@ -93,10 +105,10 @@ public class Customer implements Serializable {
      * Full constructor for creating a customer with all fields at once.
      *
      * @param firstName customer first name
-     * @param lastName  customer last name
-     * @param email     customer email address
-     * @param phone     customer phone number
-     * @param address   customer address
+     * @param lastName customer last name
+     * @param email customer email address
+     * @param phone customer phone number
+     * @param address customer address
      */
     public Customer(String firstName, String lastName, String email,
             String phone, String address) {
@@ -108,7 +120,7 @@ public class Customer implements Serializable {
     }
 
     /**
-     * Returns the combined full name for display in JSF pages (e.g. "Wei Li").
+     * Returns the combined full name for display in JSF pages.
      *
      * @return first name followed by a space and last name
      */
@@ -117,7 +129,8 @@ public class Customer implements Serializable {
     }
 
     /**
-     * Bidirectional helper: adds an order and sets the customer reference on it.
+     * Bidirectional helper: adds an order and sets the customer reference on
+     * it.
      *
      * @param order the order to add to this customer
      */
@@ -136,24 +149,59 @@ public class Customer implements Serializable {
         order.setCustomer(null);
     }
 
-    public Long getCustomerId() { return customerId; }
-    public void setCustomerId(Long customerId) { this.customerId = customerId; }
+    public Long getCustomerId() {
+        return customerId;
+    }
 
-    public String getFirstName() { return firstName; }
-    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
+    }
 
-    public String getLastName() { return lastName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
+    public String getFirstName() {
+        return firstName;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-    public String getPhone() { return phone; }
-    public void setPhone(String phone) { this.phone = phone; }
+    public String getLastName() {
+        return lastName;
+    }
 
-    public String getAddress() { return address; }
-    public void setAddress(String address) { this.address = address; }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-    public List<CustomerOrder> getOrders() { return orders; }
-    public void setOrders(List<CustomerOrder> orders) { this.orders = orders; }
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public List<CustomerOrder> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<CustomerOrder> orders) {
+        this.orders = orders;
+    }
 }
