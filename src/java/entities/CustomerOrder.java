@@ -115,8 +115,12 @@ public class CustomerOrder implements Serializable {
         this.customer = customer;
         this.product = product;
         this.quantity = quantity;
-        this.orderPrice = product.getPrice();
-        this.totalAmount = this.orderPrice * quantity;
+
+        if (product != null) {
+            this.orderPrice = product.getPrice();
+        }
+
+        calculateTotalAmount();
         this.orderDate = new Date();
     }
 
