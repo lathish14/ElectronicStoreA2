@@ -335,4 +335,13 @@ public abstract class Product implements Serializable {
         String productModel = model != null ? model : "";
         return (productBrand + " " + productModel).trim();
     }
+
+    /**
+     * Checks whether this product supports Wi-Fi.
+     *
+     * @return true if Wi-Fi capability is enabled
+     */
+    public boolean hasWifiSupport() {
+        return Boolean.TRUE.equals(wifiCapability);
+    }
 }
