@@ -43,6 +43,12 @@ public abstract class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /*
+     * This entity stores only the attributes that are common to all product
+     * types. Tablet and Smartwatch store their own specific attributes in
+     * separate subclass tables because the assignment requires joined
+     * inheritance mapping.
+     */
     // This is the primary key for the PRODUCT table.
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
