@@ -6,6 +6,7 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -49,6 +50,7 @@ public class Smartwatch extends Product implements Serializable {
     private Boolean fitnessTracking;
 
     // This stores wearable connectivity, for example Bluetooth or NFC.
+    @Size(max = 100, message = "Wearable connectivity must be less than 100 characters")
     @Column(name = "WEARABLE_CONNECTIVITY", length = 100)
     private String wearableConnectivity;
 
