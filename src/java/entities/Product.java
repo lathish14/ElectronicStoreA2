@@ -93,6 +93,8 @@ public abstract class Product implements Serializable {
 
     /*
      * Stock quantity is needed for order processing.
+     * The business layer can use this value to check whether enough stock is
+     * available before allowing an order to be created.
      * When an order is created, this quantity can be reduced.
      * When an order is deleted, this quantity can be increased again.
      */
