@@ -312,4 +312,16 @@ public abstract class Product implements Serializable {
     public boolean isInStock() {
         return stockQuantity != null && stockQuantity > 0;
     }
+
+    /**
+     * Checks whether this product has enough stock for a requested quantity.
+     *
+     * @param requestedQuantity quantity requested by the customer
+     * @return true if enough stock is available
+     */
+    public boolean hasEnoughStock(int requestedQuantity) {
+        return stockQuantity != null
+                && requestedQuantity > 0
+                && stockQuantity >= requestedQuantity;
+    }
 }
