@@ -303,4 +303,13 @@ public abstract class Product implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    /**
+     * Checks whether this product currently has stock available.
+     *
+     * @return true if stock quantity is greater than zero
+     */
+    public boolean isInStock() {
+        return stockQuantity != null && stockQuantity > 0;
+    }
 }
