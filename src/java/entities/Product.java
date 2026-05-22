@@ -367,4 +367,21 @@ public abstract class Product implements Serializable {
         }
         return false;
     }
+
+    /**
+     * Increases the stock quantity when an order is cancelled or removed.
+     *
+     * @param quantity quantity to add back
+     * @return true if stock was increased successfully
+     */
+    public boolean increaseStock(int quantity) {
+        if (quantity > 0) {
+            if (stockQuantity == null) {
+                stockQuantity = 0;
+            }
+            stockQuantity = stockQuantity + quantity;
+            return true;
+        }
+        return false;
+    }
 }
