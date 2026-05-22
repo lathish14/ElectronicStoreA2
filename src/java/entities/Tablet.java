@@ -134,4 +134,17 @@ public class Tablet extends Product implements Serializable {
     public void setBatteryCapacity(String batteryCapacity) {
         this.batteryCapacity = batteryCapacity;
     }
+
+    /**
+     * Returns a readable summary of tablet-specific details.
+     *
+     * @return tablet storage, stylus support, and battery capacity
+     */
+    public String getTabletDetails() {
+        String storage = storageCapacity != null ? storageCapacity : "N/A";
+        String stylus = stylusSupport != null && stylusSupport ? "Stylus supported" : "Stylus not supported";
+        String battery = batteryCapacity != null ? batteryCapacity : "N/A";
+
+        return storage + ", " + stylus + ", " + battery;
+    }
 }
