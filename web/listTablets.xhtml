@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+<h:head>
+    <title>The Stock of Tablets</title>
+    <h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+<h:body>
+    <div class="header">
+        <h1>The Stock of Tablets</h1>
+    </div>
+    <div class="content">
+        <h:outputText value="#{tabletBean.message}" styleClass="success-msg"
+                      rendered="#{not empty tabletBean.message}"/>
+        <h:dataTable value="#{tabletBean.tablets}" var="t"
+                     styleClass="data-table" headerClass="table-header"
+                     rendered="#{not empty tabletBean.tablets}">
+            <h:column>
+                <f:facet name="header">Brand</f:facet>
+                #{t.brand}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Model</f:facet>
+                #{t.model}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Display Size</f:facet>
+                #{t.displaySize}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Weight(gram)</f:facet>
+                #{t.weight}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Operating System</f:facet>
+                #{t.operatingSystem}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Wi-Fi</f:facet>
+                #{t.wifiCapability ? 'Yes' : 'No'}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Price</f:facet>
+                $#{t.price}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Stock Number</f:facet>
+                #{t.stockQuantity}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Storage</f:facet>
+                #{t.storageCapacity}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Stylus</f:facet>
+                #{t.stylusSupport ? 'Yes' : 'No'}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Battery</f:facet>
+                #{t.batteryCapacity}
+            </h:column>
+        </h:dataTable>
+        <h:outputText value="No tablets found." rendered="#{empty tabletBean.tablets}"/>
+        <br/>
+        <p>Total tablets: #{tabletBean.tablets.size()}</p>
+        <h:link value="Create a New Tablet" outcome="/newTablet.xhtml"/>
+        <span> | </span>
+        <h:link value="Main Page" outcome="/default.xhtml"/>
+    </div>
+</h:body>
+</html>

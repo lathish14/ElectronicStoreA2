@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+<h:head>
+    <title>The Stock of Smartwatches</title>
+    <h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+<h:body>
+    <div class="header">
+        <h1>The Stock of Smartwatches</h1>
+    </div>
+    <div class="content">
+        <h:outputText value="#{smartwatchBean.message}" styleClass="success-msg"
+                      rendered="#{not empty smartwatchBean.message}"/>
+        <h:dataTable value="#{smartwatchBean.smartwatches}" var="s"
+                     styleClass="data-table" headerClass="table-header"
+                     rendered="#{not empty smartwatchBean.smartwatches}">
+            <h:column><f:facet name="header">Brand</f:facet>#{s.brand}</h:column>
+            <h:column><f:facet name="header">Model</f:facet>#{s.model}</h:column>
+            <h:column><f:facet name="header">Display Size</f:facet>#{s.displaySize}</h:column>
+            <h:column><f:facet name="header">Weight(gram)</f:facet>#{s.weight}</h:column>
+            <h:column><f:facet name="header">Operating System</f:facet>#{s.operatingSystem}</h:column>
+            <h:column><f:facet name="header">Wi-Fi</f:facet>#{s.wifiCapability ? 'Yes' : 'No'}</h:column>
+            <h:column><f:facet name="header">Price</f:facet>$#{s.price}</h:column>
+            <h:column><f:facet name="header">Stock Number</f:facet>#{s.stockQuantity}</h:column>
+            <h:column><f:facet name="header">Health Monitoring</f:facet>#{s.healthMonitoring ? 'Yes' : 'No'}</h:column>
+            <h:column><f:facet name="header">Fitness Tracking</f:facet>#{s.fitnessTracking ? 'Yes' : 'No'}</h:column>
+            <h:column><f:facet name="header">Wearable Connectivity</f:facet>#{s.wearableConnectivity}</h:column>
+        </h:dataTable>
+        <h:outputText value="No smartwatches found." rendered="#{empty smartwatchBean.smartwatches}"/>
+        <br/>
+        <p>Total smartwatches: #{smartwatchBean.smartwatches.size()}</p>
+        <h:link value="Create a New Smartwatch" outcome="/newSmartwatch.xhtml"/>
+        <span> | </span>
+        <h:link value="Main Page" outcome="/default.xhtml"/>
+    </div>
+</h:body>
+</html>
