@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+<h:head>
+    <title>Registration</title>
+    <h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+<h:body>
+    <div class="header">
+        <h1>Register Your Account</h1>
+    </div>
+    <div class="content">
+        <h:messages globalOnly="true" styleClass="error-msg" showDetail="true"/>
+        <p>
+            Retrieve the verification code from
+            <b>#{emailVerificationBean.email}</b> and enter below!
+        </p>
+        <h:form>
+            <h:panelGrid columns="2" styleClass="form-grid">
+                <h:outputLabel value="Verification Code" for="vcode"/>
+                <h:inputText id="vcode" value="#{registerBean.verificationCode}" required="true"
+                             requiredMessage="Verification code is required."/>
+
+                <h:outputLabel value="First Name" for="fname"/>
+                <h:inputText id="fname" value="#{registerBean.firstName}" required="true"
+                             requiredMessage="First name is required."/>
+
+                <h:outputLabel value="Last Name" for="lname"/>
+                <h:inputText id="lname" value="#{registerBean.lastName}" required="true"
+                             requiredMessage="Last name is required."/>
+
+                <h:outputLabel value="Username" for="uname"/>
+                <h:inputText id="uname" value="#{registerBean.username}" required="true"
+                             requiredMessage="Username is required."/>
+
+                <h:outputLabel value="Password" for="pwd"/>
+                <h:inputSecret id="pwd" value="#{registerBean.password}" required="true"
+                               requiredMessage="Password is required."/>
+
+                <h:outputLabel value="Password (verify)" for="pwd2"/>
+                <h:inputSecret id="pwd2" value="#{registerBean.passwordVerify}" required="true"
+                               requiredMessage="Please verify your password."/>
+            </h:panelGrid>
+            <h:commandButton value="Create" action="#{registerBean.register}" styleClass="btn"/>
+        </h:form>
+        <br/>
+        <h:link value="Welcome Page" outcome="/index.xhtml"/>
+    </div>
+</h:body>
+</html>

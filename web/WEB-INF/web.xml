@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
+
+    <!--
+        JSF Faces Servlet - required for processing .xhtml pages as JSF views.
+        Member 3 added this configuration to enable the Jakarta Faces framework.
+    -->
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>jakarta.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <!-- Map the Faces Servlet to handle all .xhtml requests. -->
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+
+    <!--
+        Welcome file set to index.xhtml which provides the Login and
+        Registration links as shown in section 1 of the demo document.
+    -->
+    <welcome-file-list>
+        <welcome-file>index.xhtml</welcome-file>
+    </welcome-file-list>
+
+    <!--
+        Session timeout is 30 minutes. After this the user must log in again.
+    -->
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
+    <!--
+        Context parameters for Jakarta Faces configuration.
+        PROJECT_STAGE set to Development shows detailed error messages.
+        Set to Production before final deployment.
+    -->
+    <context-param>
+        <param-name>jakarta.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+
+    <!--
+        Disable partial state saving to avoid serialisation issues with
+        the managed beans in GlassFish during development.
+    -->
+    <context-param>
+        <param-name>jakarta.faces.PARTIAL_STATE_SAVING</param-name>
+        <param-value>false</param-value>
+    </context-param>
+
+</web-app>

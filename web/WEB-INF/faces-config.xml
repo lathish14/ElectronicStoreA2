@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="https://jakarta.ee/xml/ns/jakartaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-facesconfig_4_0.xsd"
+              version="4.0">
+    <!--
+        faces-config.xml for the ElectronicsStore JSF application.
+        Member 3 created this file as part of the JSF presentation layer setup.
+
+        Navigation rules are handled programmatically in the backing beans
+        using implicit navigation (returning a String outcome from action methods),
+        so no explicit navigation-rule elements are needed here.
+
+        Managed beans are annotated with @Named and @ViewScoped / @SessionScoped
+        so they are discovered automatically by CDI without registration here.
+    -->
+</faces-config>

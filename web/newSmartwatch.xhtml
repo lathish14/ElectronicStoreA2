@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+<h:head>
+    <title>Create a New Smartwatch</title>
+    <h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+<h:body>
+    <div class="header">
+        <h1>Create a New Smartwatch</h1>
+    </div>
+    <div class="content">
+        <h:messages globalOnly="true" styleClass="error-msg" showDetail="true"/>
+        <h:form>
+            <h:panelGrid columns="2" styleClass="form-grid">
+                <h:outputLabel value="Brand:" for="brand"/>
+                <h:inputText id="brand" value="#{smartwatchBean.brand}" required="true"
+                             requiredMessage="Brand is required."/>
+
+                <h:outputLabel value="Model:" for="model"/>
+                <h:inputText id="model" value="#{smartwatchBean.model}" required="true"
+                             requiredMessage="Model is required."/>
+
+                <h:outputLabel value="Display Size:" for="dsize"/>
+                <h:inputText id="dsize" value="#{smartwatchBean.displaySize}"/>
+
+                <h:outputLabel value="Weight (gram):" for="weight"/>
+                <h:inputText id="weight" value="#{smartwatchBean.weight}"/>
+
+                <h:outputLabel value="Operating System:" for="os"/>
+                <h:inputText id="os" value="#{smartwatchBean.operatingSystem}"/>
+
+                <h:outputLabel value="Connectivity:" for="conn"/>
+                <h:inputText id="conn" value="#{smartwatchBean.connectivity}"/>
+
+                <h:outputLabel value="Wi-Fi:" for="wifi"/>
+                <h:selectBooleanCheckbox id="wifi" value="#{smartwatchBean.wifiCapability}"/>
+
+                <h:outputLabel value="Price:" for="price"/>
+                <h:inputText id="price" value="#{smartwatchBean.price}" required="true"
+                             requiredMessage="Price is required.">
+                    <f:convertNumber minFractionDigits="2"/>
+                </h:inputText>
+
+                <h:outputLabel value="Description:" for="desc"/>
+                <h:inputTextarea id="desc" value="#{smartwatchBean.description}" rows="3" cols="25"/>
+
+                <h:outputLabel value="Stock Number:" for="stock"/>
+                <h:inputText id="stock" value="#{smartwatchBean.stockQuantity}" required="true"
+                             requiredMessage="Stock quantity is required.">
+                    <f:convertNumber integerOnly="true"/>
+                </h:inputText>
+
+                <h:outputLabel value="Health Monitoring:" for="health"/>
+                <h:selectBooleanCheckbox id="health" value="#{smartwatchBean.healthMonitoring}"/>
+
+                <h:outputLabel value="Fitness Tracking:" for="fitness"/>
+                <h:selectBooleanCheckbox id="fitness" value="#{smartwatchBean.fitnessTracking}"/>
+
+                <h:outputLabel value="Wearable Connectivity:" for="wear"/>
+                <h:inputText id="wear" value="#{smartwatchBean.wearableConnectivity}"/>
+            </h:panelGrid>
+            <h:commandButton value="Create a smartwatch" action="#{smartwatchBean.createSmartwatch}" styleClass="btn"/>
+        </h:form>
+        <br/>
+        <h:link value="The Stock of Smartwatches" outcome="/listSmartwatches.xhtml"/>
+        <span> | </span>
+        <h:link value="Main Page" outcome="/default.xhtml"/>
+    </div>
+</h:body>
+</html>

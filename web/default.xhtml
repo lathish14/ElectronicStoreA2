@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html">
+<h:head>
+    <title>eBusiness</title>
+    <h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+<h:body>
+    <div class="header">
+        <h1>eBusiness: Product, Customer and Order Management</h1>
+    </div>
+    <div class="content">
+
+        <h2>PRODUCTS</h2>
+        <h:link value="Create a New Tablet" outcome="/newTablet.xhtml"/>
+        <span> | </span>
+        <h:link value="The Stock of Tablets" outcome="/listTablets.xhtml"/>
+        <span> | </span>
+        <h:link value="Search for a Tablet" outcome="/searchTablet.xhtml"/>
+        <br/>
+        <h:link value="Create a New Smartwatch" outcome="/newSmartwatch.xhtml"/>
+        <span> | </span>
+        <h:link value="The Stock of Smartwatches" outcome="/listSmartwatches.xhtml"/>
+        <span> | </span>
+        <h:link value="Search for a Smartwatch" outcome="/searchSmartwatch.xhtml"/>
+
+        <h2>CUSTOMERS</h2>
+        <h:link value="Create a New Customer" outcome="/newCustomer.xhtml"/>
+        <span> | </span>
+        <h:link value="List of Customers" outcome="/listCustomers.xhtml"/>
+        <span> | </span>
+        <h:link value="Search for a Customer" outcome="/searchCustomer.xhtml"/>
+
+        <h2>ORDERS</h2>
+        <h:link value="Create a New Order" outcome="/newOrder.xhtml"/>
+        <span> | </span>
+        <h:link value="List of Orders" outcome="/listOrders.xhtml"/>
+        <span> | </span>
+        <h:link value="Search for an Order" outcome="/searchOrder.xhtml"/>
+
+        <br/><br/>
+        <h:form>
+            <h:commandLink value="Logout" action="#{loginBean.logout}"/>
+        </h:form>
+    </div>
+</h:body>
+</html>

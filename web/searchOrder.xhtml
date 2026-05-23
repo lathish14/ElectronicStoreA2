@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+<h:head>
+    <title>Search for an Order</title>
+    <h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+<h:body>
+    <div class="header">
+        <h1>Search for an Order</h1>
+    </div>
+    <div class="content">
+        <h:messages globalOnly="true" styleClass="error-msg" showDetail="true"/>
+        <h:form>
+            <h:panelGrid columns="2" styleClass="form-grid">
+                <h:outputLabel value="Order #:" for="oid"/>
+                <h:inputText id="oid" value="#{orderBean.searchOrderId}">
+                    <f:convertNumber integerOnly="true"/>
+                </h:inputText>
+            </h:panelGrid>
+            <h:commandButton value="Search for an order" action="#{orderBean.searchOrder}" styleClass="btn"/>
+        </h:form>
+        <br/>
+        <h:panelGroup rendered="#{orderBean.foundOrder != null}">
+            <h2>The Found Order</h2>
+            <h:dataTable value="#{[orderBean.foundOrder]}" var="o"
+                         styleClass="data-table" headerClass="table-header">
+                <h:column><f:facet name="header">Order #</f:facet>#{o.orderId}</h:column>
+                <h:column><f:facet name="header">Customer</f:facet>#{o.customer.fullName}</h:column>
+                <h:column><f:facet name="header">Device</f:facet>#{o.product.brand} - #{o.product.model}</h:column>
+                <h:column>
+                    <f:facet name="header">Created At</f:facet>
+                    <h:outputText value="#{o.orderDate}">
+                        <f:convertDateTime pattern="EEE MMM dd HH:mm:ss zzz yyyy" timeZone="Australia/Brisbane"/>
+                    </h:outputText>
+                </h:column>
+                <h:column><f:facet name="header">Unit Price</f:facet>$#{o.orderPrice}</h:column>
+                <h:column><f:facet name="header">Qty</f:facet>#{o.quantity}</h:column>
+                <h:column><f:facet name="header">Total Price</f:facet>$#{o.totalAmount}</h:column>
+            </h:dataTable>
+            <p>Total orders: 1</p>
+        </h:panelGroup>
+        <br/>
+        <h:link value="Create a New Order" outcome="/newOrder.xhtml"/>
+        <span> | </span>
+        <h:link value="Main Page" outcome="/default.xhtml"/>
+    </div>
+</h:body>
+</html>
